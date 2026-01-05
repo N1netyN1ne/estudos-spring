@@ -1,18 +1,20 @@
 package com.ryan.estudos_spring.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Objects;
 
 @Entity
+@Table(name = "produtos")
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Nome do produto é obrigatorio")
     private String nome;
+    @Min(value = 0,message = "O valor não pode ser negativo")
     private double preco;
     public Produto(){
     }

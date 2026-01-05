@@ -2,6 +2,7 @@ package com.ryan.estudos_spring.controller;
 
 import com.ryan.estudos_spring.model.Produto;
 import com.ryan.estudos_spring.repository.ProdutoRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,31 +17,31 @@ public class ProdutoController {
     }
 
     @GetMapping("/produtos")
-    public List<Produto> getProdutos() {
-        return produtoRepository.findAll();
+    public ResponseEntity<List<Produto>> getProdutos() {
+        return ResponseEntity.ok(produtoRepository.findAll());
     }
 
     @GetMapping("/produtos/{id}")
-    public Optional<Produto> buscarPorId(@PathVariable Long id){
+    public ResponseEntity<Optional<Produto>> buscarPorId(@PathVariable Long id){
         if(produtoRepository.findById(id) != null){
-            return produtoRepository.findById(id);
+            return ResponseEntity.ok(produtoRepository.findById(id));
         }
-        return null;
+        return ResponseEntity.notFound().build();
     }
     @PostMapping("/produtos")
-    public Produto criarProduto(@RequestBody Produto produto){
+    public ResponseEntity<Produto> criarProduto(@Valid @RequestBody Produto produto){
         if(produto != null){
-            return produtoRepository.save(produto);
+            return ResponseEntity.status(201).body(produtoRepository.save(produto));
         }
-        return null;
+        return ResponseEntity.badRequest().build();
     }
+
     @DeleteMapping("/produtos/{id}")
-    public ResponseEntity<Void> apagarProduto(@PathVariable Long id){
-        if(id != null){
+    public ResponseEntity apagarProdutoPorId(@PathVariable Long id){
+        if(id != null && id >= 0 && produtoRepository.existsById(id)){
             produtoRepository.deleteById(id);
-            return ResponseEntity.ok().build();
-        }else{
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         }
+        return ResponseEntity.notFound().build();
     }
 }
