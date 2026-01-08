@@ -16,6 +16,10 @@ public class Produto {
     private String nome;
     @Min(value = 0,message = "O valor não pode ser negativo")
     private double preco;
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
     public Produto(){
     }
     public Produto(Long id, String nome, double preco){
