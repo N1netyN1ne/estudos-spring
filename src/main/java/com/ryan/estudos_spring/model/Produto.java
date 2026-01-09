@@ -40,6 +40,10 @@ public class Produto {
         return preco;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -50,6 +54,10 @@ public class Produto {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     @Override
