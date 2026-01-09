@@ -10,4 +10,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleProdutoNaoEncontrado(ProdutoNaoEncontradoException ex){
         return ResponseEntity.status(404).body(ex.getMessage());
     }
+
+    @ExceptionHandler(CategoriaNaoEncontradaException.class)
+    public ResponseEntity<String>handleCategoriaNaoContrada(CategoriaNaoEncontradaException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
 }
